@@ -1,3 +1,8 @@
 MATH/
+<<<<<<< HEAD
 
 .DS_Store
+=======
+.DS_Store
+.env
+>>>>>>> 7c5bb119 (THIS IS WRONG DON'T USE IT)
