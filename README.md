@@ -4,9 +4,6 @@ This project builds a classifier that routes math problems to the most efficient
 
 We use Python, PyTorch, and scikit-learn for model development and evaluation.
 
-pritn("Hello world!")
-
-![image](https://github.com/user-attachments/assets/cc81e70b-5870-40f0-b045-9ee6b1f4589a)
-WARNING: NEW ADDITION TO SEX OFFENDER LIST. HIGHLY DANGEROUS. DO NOT INTERACT.
+pritn("Hello world!") -> this is a really unfunny comment left by @robertlewi
 
 #### Authors: Milan Dutta, George Harris, Robert Lewison, Matt Zhu
