@@ -2,3 +2,4 @@ pandas
 google-genai
 numpy
 scikit-learn
+python-dotenv

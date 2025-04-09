@@ -4,6 +4,10 @@ import os
 from google import genai
 from google.genai import types
 from is_correct import is_equiv
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
