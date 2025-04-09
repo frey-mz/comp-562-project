@@ -1,4 +1,5 @@
 import json
+import time
 from transformation import get_basic_answer
 
 offset = float(input("Please enter the start line: "))
@@ -26,13 +27,19 @@ with open(input_file_path, 'r', encoding='utf-8') as infile, \
             solution = data.get('solution')
             print("new output for id " + str(data.get('id')))
             answer = ""
-            try:
-                answer = get_basic_answer(problem)
-            except Exception as e:
-                print(e)
-                print("error for line " + str(data.get('id')))
+            for attempt_count in range(5):
+                try:
+                    answer = get_basic_answer(problem)
+                    break
+                except Exception as e:
+                    print(e)
+                    print("error for line " + str(data.get('id')))
+                time.sleep(4)
+
+            if answer == "":
                 linecount = linecount + 1
                 continue
+            
 
             output_data = {
                 'id': data.get('id'),
@@ -46,3 +53,4 @@ with open(input_file_path, 'r', encoding='utf-8') as infile, \
             outfile.write(json.dumps(output_data) + '\n')
 
         linecount = linecount + 1
+        time.sleep(4)
