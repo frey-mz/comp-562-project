@@ -34,6 +34,7 @@ with open(input_file_path, 'r', encoding='utf-8') as infile, \
                 continue
 
             output_data = {
+                'id': data.get('id'),
                 'problem': problem,
                 'solution': solution,
                 'answer': answer
