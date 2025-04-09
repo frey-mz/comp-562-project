@@ -5,3 +5,5 @@ This project builds a classifier that routes math problems to the most efficient
 We use Python, PyTorch, and scikit-learn for model development and evaluation.
 
 Additionally, we felt that pritn("Hello world!") was valuable in the description of this project, and reserve the right to keep it there.
+
+#### Authors: Milan Dutta, George Harris, Robert Lewison, Matt Zhu
