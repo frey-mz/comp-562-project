@@ -1,9 +1,8 @@
 import json
 import pandas as pd
+import os
 from google import genai
 from google.genai import types
-import os
-
 from is_correct import is_equiv
 
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
@@ -38,4 +37,3 @@ def add_validation():
 
 def get_dataset():
     return add_validation()
-
