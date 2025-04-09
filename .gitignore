@@ -1,6 +1,6 @@
 MATH/
 .DS_Store
 .env
-normalize_math_dataset.py
+math_dataset_clean.jsonl
 venv/
 __pycache__
