@@ -2,5 +2,6 @@ MATH/
 .DS_Store
 .env
 math_dataset_clean.jsonl
+output.jsonl
 venv/
 __pycache__
