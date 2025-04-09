@@ -1,3 +1,5 @@
 MATH/
 .DS_Store
 .env
+normalize_math_dataset.py
+venv/
