@@ -3,19 +3,35 @@ import time
 from transformation import get_basic_answer
 from itertools import islice
 
-try:
-    start_line = int(input("Please enter the start line (0-based index): "))
-    num_problems = int(input("Please enter the number of problems to solve: "))
-    if start_line < 0 or num_problems <= 0:
-        raise ValueError("Start line must be non-negative and number of problems must be positive.")
-except ValueError as e:
-    print(f"Invalid input: {e}")
+available_inputs = {
+    "math": "jsonls/input_jsonls/math_dataset_clean.jsonl",
+    "omni": "jsonls/input_jsonls/omni_math_dataset_clean.jsonl",
+}
+
+# Prompt user for dataset name
+print("Available datasets:")
+for key in available_inputs:
+    print(f"{key}")
+
+dataset_choice = input("Which dataset would you like to use? ").strip().lower()
+
+if dataset_choice not in available_inputs:
+    print(f"Invalid dataset selection: {dataset_choice}")
     exit(1)
 
+input_file_path = available_inputs[dataset_choice]
+output_file_path = f"jsonls/output_jsonls/output_{dataset_choice}.jsonl"
 linecount = 0
 
-input_file_path = 'math_dataset_clean.jsonl'
-output_file_path = 'output.jsonl'
+# Prompt user for line range
+try:
+    start_line = int(input("Enter the start line (0-based index): "))
+    num_problems = int(input("Enter the number of problems to solve: "))
+    if start_line < 0 or num_problems <= 0:
+        raise ValueError
+except ValueError:
+    print("Start line must be non-negative and number of problems must be positive.")
+    exit(1)
 
 print(f"Processing {num_problems} problems starting from line {start_line}...")
 
