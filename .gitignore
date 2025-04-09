@@ -3,5 +3,8 @@ MATH/
 .env
 math_dataset_clean.jsonl
 output.jsonl
+output_cleaned.jsonl
+embeddings.csv
+validated.jsonl
 venv/
 __pycache__

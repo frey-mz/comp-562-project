@@ -3,6 +3,11 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
 import numpy as np
 from transformation import get_dataset
+import voyageai
+import os
+import time
+
+vo = voyageai.Client()
 
 
 class LoggyReggy:
@@ -52,13 +57,28 @@ class LoggyReggy:
         return np.array(y_predicted_cls)
 
 print("Loading and preparing dataset...")
-# load classifier
-df = get_dataset()
+# load data
+df = pd.read_json("validated.jsonl", lines=True)
 print("Dataset loaded. Vectorizing...")
-vectorizer = CountVectorizer(binary=True)
-X = vectorizer.fit_transform(df['problem']).toarray()
-y = df['solvable'].values
-print(f"Vectorization complete. Features: {X.shape[1]}")
+# Save embeddings to a file if the file doesn't exist/is empty, otherwise embed.
+if os.path.exists("embeddings.csv"):
+    X = np.loadtxt("embeddings.csv", delimiter=',')
+else:
+    problems = df['problem'].tolist()
+    X = np.empty((0, 1024), dtype=np.float32)
+    count = 0
+    for i in range(0, len(problems), 128):
+        count += 1
+        if count >= 1999:
+            time.sleep(60)
+            count = 0
+        X = np.append(X, vo.embed(
+            problems[i:i+128], model="voyage-3"
+        ).embeddings, axis=0)
+        print(f"Processed {i+128} problems...")
+    np.savetxt("embeddings.csv", X, delimiter=',')
+print(f"Vectorization complete. Vector Count: {X.shape[0]}, Features: {X.shape[1]}")
+y = df['correct'].values
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 print(f"Data split. Training samples: {X_train.shape[0]}, Test samples: {X_test.shape[0]}")
 
@@ -72,3 +92,8 @@ print("Evaluating model...")
 predictions = model.predict(X_test)
 accuracy = np.mean(predictions == y_test)
 print(f"Model Accuracy: {accuracy * 100:.2f}%")
+
+# save predictions and accuracy in text
+with open("results.txt", "w") as f:
+    f.write(f"Model Accuracy: {accuracy * 100:.2f}%\n")
+    f.write(f"Predictions: {predictions}\n")
