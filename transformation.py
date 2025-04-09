@@ -29,9 +29,7 @@ def add_validation():
     with open("math_dataset_clean.jsonl", "r", encoding="utf-8") as f:
         rows = [json.loads(line) for line in f]
     problem_df = pd.DataFrame(rows)
-
     get_solvable(problem_df)
-
     output_df = problem_df[["id", "solvable"]]
     return output_df
 
