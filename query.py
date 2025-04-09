@@ -28,7 +28,8 @@ with open(input_file_path, 'r', encoding='utf-8') as infile, \
             answer = ""
             try:
                 answer = get_basic_answer(problem)
-            except:
+            except Exception as e:
+                print(e)
                 print("error for line " + str(data.get('id')))
                 linecount = linecount + 1
                 continue

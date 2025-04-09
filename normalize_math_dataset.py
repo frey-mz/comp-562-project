@@ -41,6 +41,7 @@ def normalize_math_dataset_to_jsonl(root_dir, output_file):
                         print(f"Error reading {json_file}: {e}")
 
     # Shuffle train and test examples independently
+    random.seed(10)
     random.shuffle(all_rows["train"])
     random.shuffle(all_rows["test"])
 
