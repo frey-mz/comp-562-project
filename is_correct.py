@@ -153,8 +153,8 @@ def is_equiv(db_solution, ai_solution, verbose=False):
         if len(b2) == 0:
             print("db solution without boxed text found, kinda not good error")
             return False
-        ss1 = _strip_string(b1[0])
-        ss2 = _strip_string(b2[0])
+        ss1 = _strip_string(b1[len(b1)-1])
+        ss2 = _strip_string(b2[len(b2)-1])
         if verbose:
             print(ss1, ss2)
         return ss1 == ss2
@@ -209,9 +209,10 @@ So, the inverse of $h(x)$ is $\frac{x+2}{7}$.
 Final Answer: The final answer is $\boxed{\frac{x+2}{7}}$')"""
 
     e2 = R"""\[h(x)=f(g(x))=7(x-1)+5=7x-2.\]Let's replace $h(x)$ with $y$ for simplicity, so \[y=7x-2.\]In order to invert $h(x)$ we may solve this equation for $x$. That gives \[y+2=7x\]or \[x=\frac{y+2}{7}.\]Writing this in terms of $x$ gives the inverse function of $h$ as \[h^{-1}(x)=\boxed{\frac{x+2}{7}}.\]"""
+    e3 = R"""\[h(x)=f(g(x))=7(x-1)+5=7x-2.\]Let's replace $h(x)$ with $y$ for simplicity, so \[y=7x-2.\]In order to invert $h(x)$ we may solve this equation for $x$. That gives \[y+2=7x\]or \[x=\frac{y+2}{7}.\]Writing this in terms of $x$ gives the inverse function of $h$ as \[h^{-1}(x)=\boxed{\frac{x+1}{7}}.\]"""
 
-    x = is_equiv(e1, e2)
-    print(x)
+    print(is_equiv(e1, e2))
+    print(is_equiv(e1, e3))
 
 if __name__ == '__main__':
     main()
