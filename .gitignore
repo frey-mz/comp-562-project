@@ -3,3 +3,4 @@ MATH/
 .env
 normalize_math_dataset.py
 venv/
+__pycache__
