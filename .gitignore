@@ -5,4 +5,14 @@ embeddings.csv
 validated.jsonl
 venv/
 __pycache__
-jsonl/output_jsonls/output_math.jsonl
+math_dataset_clean.jsonl
+scripts/
+jsonls/
+*.jsonl
+*.txt
+*.pkl
+*.log
+*.pyc
+*.csv
+*.png
+*.keras
