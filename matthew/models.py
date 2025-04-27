@@ -1,14 +1,73 @@
 import openai
 import time
-import requests
-import json
-from google import genai
-from google.genai import types
 
-import ollama
+from openai import OpenAI
 
-#sync cpu option
+client = OpenAI(max_retries=10)
 
+
+
+def getMultiModelResponse(problem, system, isCorrect):
+    models = ["gpt-4.1-mini", "gpt-4.1", "o4-mini"]
+    curr = 0
+    costs = []
+    for model in models:
+        resp = getOpenAIResponse(model, problem, system)
+        if resp.error != None:
+            print(resp.error)
+            return None
+        costs.append({
+            'input_tokens': resp.usage.input_tokens,
+            'output_tokens': resp.usage.output_tokens,
+        })
+        correct = False
+        for output in resp.output:
+            if output.type == "reasoning":
+                for content in output.summary:
+                    if isCorrect(content.text):
+                        correct = True
+                        break
+            else:
+                for content in output.content:
+                    if content.type == "output_text" and isCorrect(content.text):
+                        correct = True
+                        break
+            if correct:
+                break
+        if correct: 
+            print(model + " WON")
+            break
+        print(model + " FAILED")
+        curr+=1
+    return (curr, costs)
+
+
+
+def getOpenAIResponse(model, problem, system):
+    response = client.responses.create(
+        model= model,
+        input= problem,
+        instructions = system
+    )
+    return response
+
+def getOpenAIResponseTexts(model, problem, system):
+    resp = getOpenAIResponse(model, problem, system)
+    if resp.error != None:
+        print(resp.error)
+        return None
+    texts = []
+    for output in resp.output:
+        if output.type == "reasoning":
+            for content in output.summary:
+                texts.append(content.text)
+            break
+        else:
+            for content in output.content:
+                texts.append(content.text)
+    return texts
+
+"""
 class DeepSeek_Model():
     def __init__(self, system_prompt=""):
         self.system_prompt = system_prompt
@@ -44,3 +103,4 @@ class Gemini_Model():
                 print("error", e)
             time.sleep(10)
         return ""
+"""
