@@ -5,3 +5,4 @@ math_dataset_clean.jsonl
 output.jsonl
 venv/
 __pycache__
+train-hard/
