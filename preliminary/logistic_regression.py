@@ -1,14 +1,11 @@
 import pandas as pd
-from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
 import numpy as np
-from transformation import get_dataset
 import voyageai
 import os
 import time
 
 vo = voyageai.Client()
-
 
 class LoggyReggy:
     def __init__(self, learning_rate=0.1, n_iterations=1000):
@@ -18,7 +15,6 @@ class LoggyReggy:
         self.bias = None
 
     def sigmoid(self, z):
-        # Clip z to prevent overflow in exp(-z)
         z_clipped = np.clip(z, -500, 500)
         return 1 / (1 + np.exp(-z_clipped))
     
